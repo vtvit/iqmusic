@@ -119,7 +119,7 @@ async def ytdl(link):
         return 0, stderr.decode()
 
 
-@Client.on_message(filters.command(["تشغيل"], prefixes=f"{HNDLR}"))
+@Client.on_message(filters.command(["play"], prefixes=f"{HNDLR}"))
 async def play(client, m: Message):
     replied = m.reply_to_message
     chat_id = m.chat.id
@@ -127,7 +127,7 @@ async def play(client, m: Message):
     if replied:
         if replied.audio or replied.voice:
             await m.delete()
-            huehue = await replied.reply("**🔄 تتم تشغيل انتظر قليلا**")
+            huehue = await replied.reply("**🔄 پێکرا کەمێك چاوەڕێ بکە**")
             dl = await replied.download()
             link = replied.link
             if replied.audio:
@@ -144,10 +144,10 @@ async def play(client, m: Message):
                 await m.reply_photo(
                     photo="https://l.top4top.io/p_2363dcjiw1.jpg",
                     caption=f"""
-**🏷️ العنوان : [{songname}]({link})
-💬 ايدي الدردشة : {chat_id}
-🎧 طلب من : {m.from_user.mention}
-💻 قناة السورس : [ قناة السورس ](t.me/jepthon)**
+**🏷️ ناونیشان : [{songname}]({link})
+💬 ناسنامەی چات : {chat_id}
+🎧 لە لایەن  : {m.from_user.mention}
+💻 چەناڵ 🕷️🖤 : [ چەناڵی سەرچاوە ](t.me/xv7amo)**
 """,
                 )
             else:
