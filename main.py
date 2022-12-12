@@ -1,7 +1,7 @@
 import asyncio
 from pytgcalls import idle
 from config import call_py
-from Musicjepthon.التشغيل import arq
+from Musicjepthon.کارپێکردن import arq
 
         
 async def main():
@@ -9,7 +9,7 @@ async def main():
     print(
         """
     ------------------
-   | تم تشغيل ميوزك الجوكر |
+   | میوزیکی بۆتی زیرەك کاردەکات |
     ------------------
 """
     )
