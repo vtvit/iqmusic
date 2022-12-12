@@ -1,7 +1,7 @@
 
-jepthoniq
+IQerenn
 /
-JokerMusic
+iqmusic
 Public
 Code
 Issues
@@ -10,8 +10,8 @@ Actions
 Projects
 Security
 Insights
-JokerMusic/Musicjepthon/التنزيل.py
-@jepthoniq
+iqmusic/vtvit/دابەزاندن.py
+@IQerenn
 jepthoniq Add files via upload
  1 contributor
 298 lines (268 sloc)  9.22 KB
