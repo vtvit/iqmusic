@@ -147,7 +147,7 @@ async def play(client, m: Message):
 **🏷️ ناونیشان : [{songname}]({link})
 💬 ناسنامەی چات : {chat_id}
 🎧 لە لایەن  : {m.from_user.mention}
-💻 چەناڵ 🕷️🖤 : [ چەناڵی سەرچاوە ](t.me/xv7amo)**
+💻 چەناڵ🕷️🖤 : [ چەناڵی سەرچاوە ](t.me/xv7amo)**
 """,
                 )
             else:
@@ -164,24 +164,24 @@ async def play(client, m: Message):
                 await m.replyhttps_photo(
                     photo="https://l.top4top.io/p_2363dcjiw1.jpg",
                     caption=f"""
-**▶ تم تشغيل الاغنية 
-**🏷️ العنوان : [{songname}]({link})
-💬 ايدي الدردشة : {chat_id}
-🎧 طلب من : {m.from_user.mention}
-💻 قناة السورس : [ قناة السورس ](t.me/jepthon)**
+**▶ گۆرانیەکە پێکراوە🖤 
+**🏷️ ناونیشان : [{songname}]({link})
+💬 ناسنامەی چات : {chat_id}
+🎧 لە لایەن : {m.from_user.mention}
+💻 چەناڵ🕷️🖤 : [ چەناڵی سەرچاوە ](t.me/xv7amo)**
 """,
                 )
 
     else:
         if len(m.command) < 2:
-            await m.reply("يجب عليك الرد على الاغنيه او وضع اسمها مع الامر")
+            await m.reply("پێویستە وەڵامی گۆرانییەکە بدەیتەوە یان ناوی لەگەڵ فەرمانەکە بنووسە")
         else:
             await m.delete()
-            huehue = await m.reply("🔎 جاري البحث الرجاء الانتظار ")
+            huehue = await m.reply("🔎 لە گەڕاندایە تکایە کەمێك چاوەڕێ بکە ... ")
             query = m.text.split(None, 1)[1]
             search = ytsearch(query)
             if search == 0:
-                await huehue.edit("- لم يتم العثور على شيء ")
+                await huehue.edit("- هیچ شتێك نەدۆزرایەوە ")
             else:
                 songname = search[0]
                 url = search[1]
@@ -189,7 +189,7 @@ async def play(client, m: Message):
                 thumbnail = search[3]
                 hm, ytlink = await ytdl(url)
                 if hm == 0:
-                    await huehue.edit(f"**- عذرا هناك خطأ ما** \n\n`{ytlink}`")
+                    await huehue.edit(f"**- ببورە، شتێك هەڵەیە** \n\n`{ytlink}`")
                 else:
                     if chat_id in QUEUE:
                         pos = add_to_queue(chat_id, songname, ytlink, url, "Audio", 0)
@@ -197,11 +197,11 @@ async def play(client, m: Message):
                         await m.reply_photo(
                             photo=f"{thumbnail}",
                             caption=f"""
-**🏷️  العنوان : [{songname}]({url})
-⏱️ المدة : {duration}
-💬 ايدي المحادثه : {chat_id}
-🎧 طلب من : {m.from_user.mention}
-💻 قناة السورس : [ قناة السورس ](t.me/jepthon)**
+**🏷️  ناونیشان : [{songname}]({url})
+⏱️ ماوەکەیی : {duration}
+💬 ناسنامەی چات : {chat_id}
+🎧 لە لایەن  : {m.from_user.mention}
+💻 چەناڵ🕷️🖤 : [ چەناڵی سەرچاوە ](t.me/xv7amo)**
 """,
                         )
                     else:
@@ -219,19 +219,19 @@ async def play(client, m: Message):
                             await m.reply_photo(
                                 photo=f"{thumbnail}",
                                 caption=f"""
-**▶ بدأ تشغيل الاغنية
-**🏷️  العنوان : [{songname}]({url})
-⏱️ المدة : {duration}
-💬 ايدي المحادثه : {chat_id}
-🎧 طلب من : {m.from_user.mention}💻
-💻 قناة السورس : [ قناة السورس ](t.me/jepthon)**
+**▶ گۆرانییەکە کاریکرد
+**🏷️  ناونیشان : [{songname}]({url})
+⏱️ ماوەکەیی : {duration}
+💬 ناسنامەی چات : {chat_id}
+🎧 لەلایەن : {m.from_user.mention}💻
+💻 چەناڵ🕷️🖤 : [ چەناڵی سەرچاوە ](t.me/jepthon)**
 """,
                             )
                         except Exception as ep:
                             await huehue.edit(f"`{ep}`")
 
 
-@Client.on_message(filters.command(["تشغيل_فيديو"], prefixes=f"{HNDLR}"))
+@Client.on_message(filters.command(["playvid"], prefixes=f"{HNDLR}"))
 async def vplay(client, m: Message):
     replied = m.reply_to_message
     chat_id = m.chat.id
@@ -239,7 +239,7 @@ async def vplay(client, m: Message):
     if replied:
         if replied.video or replied.document:
             await m.delete()
-            huehue = await replied.reply("**🔄 تتم العملية**")
+            huehue = await replied.reply("**🔄 پڕۆسەکە تەواو بوو**")
             dl = await replied.download()
             link = replied.link
             if len(m.command) < 2:
@@ -251,7 +251,7 @@ async def vplay(client, m: Message):
                 else:
                     Q = 720
                     await huehue.edit(
-                        "- مسموح فقط بدقه 720, 480, 360 \n يتم البث بدقه 720p"
+                        "- ڕێگەپێدراوە تەنیا بە خولەكی 720, 480, 360 \n گەڕانەکە بە وردی ئەنجام دەدرێت 720p"
                     )
 
             if replied.video:
@@ -266,11 +266,11 @@ async def vplay(client, m: Message):
                 await m.reply_photo(
                     photo="https://l.top4top.io/p_2363dcjiw1.jpg",
                     caption=f"""
-#⃣ Video Di Antrian Ke {pos}
-**🏷️  العنوان : [{songname}]({url})
-💬 ايدي المحادثه : {chat_id}
-🎧 طلب من : {m.from_user.mention}
-💻 قناة السورس : [ قناة السورس ](t.me/jepthon)**
+#⃣ ڤیدیۆ ... {pos}
+**🏷️  ناونیشان : [{songname}]({url})
+💬 ناسنامەی چات : {chat_id}
+🎧 لەلایەن  : {m.from_user.mention}
+💻 چەناڵ🕷️🖤 : [ چەناڵی سەرچاوە ](t.me/xv7amo)**
 """,
                 )
             else:
@@ -291,10 +291,10 @@ async def vplay(client, m: Message):
                 await m.reply_photo(
                     photo="https://l.top4top.io/p_2363dcjiw1.jpg",
                     caption=f"""
-**🏷️  العنوان : [{songname}]({url})
-💬 ايدي المحادثه : {chat_id}
-🎧 طلب من : {m.from_user.mention}
-💻 قناة السورس : [ قناة السورس ](t.me/jepthon)**
+**🏷️  ناونیشان : [{songname}]({url})
+💬 ناسنامەی چات : {chat_id}
+🎧 لەلایەن  : {m.from_user.mention}
+💻 چەناڵ🕷️🖤 : [ چەناڵی سەرچاوە ](t.me/jepthon)**
 """,
                 )
 
