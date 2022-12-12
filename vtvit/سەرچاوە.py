@@ -10,11 +10,11 @@ from config import HNDLR, SUDO_USERS, OWNER_NAME, CHANNEL
 
 START_TIME = datetime.utcnow()
 TIME_DURATION_UNITS = (
-    ("الأحد", 60 * 60 * 24 * 7),
-    ("يوم", 60 * 60 * 24),
-    ("الساعة", 60 * 60),
-    ("الدقيقة", 60),
-    ("الثانيه", 1),
+    ("یەکشەممە", 60 * 60 * 24 * 7),
+    ("ڕۆژ", 60 * 60 * 24),
+    ("کاتژمێر", 60 * 60),
+    ("خولەك", 60),
+    ("چرکە", 1),
 )
 
 
@@ -29,7 +29,7 @@ async def _human_time_duration(seconds):
     return ", ".join(parts)
 
 
-@Client.on_message(filters.command(["بنك"], prefixes=f"{HNDLR}"))
+@Client.on_message(filters.command(["پینگ"], prefixes=f"{HNDLR}"))
 async def ping(client, m: Message):
     await m.delete()
     start = time()
@@ -39,12 +39,12 @@ async def ping(client, m: Message):
     uptime_sec = (current_time - START_TIME).total_seconds()
     uptime = await _human_time_duration(int(uptime_sec))
     await m_reply.edit(
-        f"<b>🏓 بـنـك/b> `{delta_ping * 1000:.3f} بالثانيه` \n<b>⏳ شغال</b> - `{uptime}`"
+        f"<b>🏓 پینگ/b> `{delta_ping * 1000:.3f} بە چرکە` \n<b>⏳ کار دەکات</b> - `{uptime}`"
     )
 
 
 @Client.on_message(
-    filters.user(SUDO_USERS) & filters.command(["اعادة تشغيل"], prefixes=f"{HNDLR}")
+    filters.user(SUDO_USERS) & filters.command(["دەستپێکردنەوە"], prefixes=f"{HNDLR}")
 )
 async def restart(client, m: Message):
     await m.delete()
@@ -57,34 +57,34 @@ async def restart(client, m: Message):
     await jepthon.edit("7")
     await jepthon.edit("8")
     await jepthon.edit("9")
-    await jepthon.edit("**تم اعادة تشغيل سورس ابن الدورة ميوزك بنجاح ✓**")
+    await jepthon.edit("**سەرچاوەی میوزیك بەسەرکەوتوویی دەستیپێکردەوە ✓**")
     os.execl(sys.executable, sys.executable, *sys.argv)
     quit()
 
 
-@Client.on_message(filters.command(["الاوامر"], prefixes=f"{HNDLR}"))
+@Client.on_message(filters.command(["فەرمانەکان"], prefixes=f"{HNDLR}"))
 async def help(client, m: Message):
     await m.delete()
     JEPM = f"""
 👋 اهلا {m.from_user.mention}!
 𝘰𝘳𝘥𝘦𝘳𝘴 𝘮𝘶𝘴𝘪𝘤 [ {OWNER_NAME} ](t.me/{CHANNEL})
 ——————×—————
-⧉ | لتشغيل صوتية في المكالمة أرسل ⇦ [ `{HNDLR}تشغيل  + اسم الاغنية` ]
-⧉ | لتشغيل فيديو في المكالمة  ⇦ [ `{HNDLR}تشغيل_فيديو  + اسم الاغنية` ]
+⧉ | بۆ پێکردنی گۆرانی لە پەیوەندی دەنگی ⇦ [ `{HNDLR}play  + ناوی گۆرانی` ]
+⧉ | بۆ پێکردنی گۆرانی لە پەیوەندی دەنگی  ⇦ [ `{HNDLR}playvid  + ناوی گۆرانی` ]
 ———————×———————
-⧉ | لأيقاف الاغنية او الفيديو مؤقتآ  ⇦ [ `{HNDLR}استئناف` ] 
-⧉ | لأعاده تشغيل الاغنية ⇦  [ `{HNDLR}ايقاف_الاستئناف` ]
-⧉ | لأيقاف الاغنية  ⇦ [ `{HNDLR}ايقاف` ] 
-⧉ | لتغطي الاغنية الحالية و تشغيل الاغنية التالية ⇦ [ `{HNDLR}تخطي` ]
-⧉ | لتشغيل الاغنية عشوائية من قناة او مجموعة  ⇦ [ `{HNDLR}اغنيه عشوائية` ]
+⧉ | بۆ وەستاندنی گۆرانی و ڤیدیۆ بۆ ماوەیەکی کاتی  ⇦ [ `{HNDLR}pause` ] 
+⧉ | دووبارە دەستپێکردنەوەی گۆرانی ⇦  [ `{HNDLR}reuse` ]
+⧉ | وەستاندنی گۆرانی  ⇦ [ `{HNDLR}stop` ] 
+⧉ | بۆ تێپەڕاندنی گۆرانی بۆ دانەیەکی تر ⇦ [ `{HNDLR}skip` ]
+⧉ | بۆ پێکردنی گۆرانی هەڕەمەکی لە گرووپ و چەناڵ  ⇦ [ `{HNDLR}playrandom` ]
 ———————×———————
-⧉ | لتحميل صوتية أرسل ⇦ [ `{HNDLR}تحميل + اسم الاغنية او الرابط` ]
-⧉ | لتحميل فيديو  ⇦  [ `{HNDLR}تحميل_فيديو + اسم الاغنية او الرابط` ]
+⧉ | بۆ داگرتنی دەنگی  ⇦ [ `{HNDLR}داگرتن + ناوی گۆرانی یان بەستەر` ]
+⧉ | بۆ داگرتنی ڤیدیۆ   ⇦  [ `{HNDLR}داگرتن_ڤیدیۆ + ناوی ڤیدیۆ یان بەستەر` ]
 ———————×———————
-⧉ | لأعاده تشغيل التنصيب أرسل ⇦  [ `{HNDLR}ريستارت` ]
+⧉ | بۆ دووبارە دەستپێکردنەوەی  دامەزراندن ⇦  [ `{HNDLR}دەستپێکردنەوە` ]
 ———————×———————
-المطور 💻 : @VTVIT
-القناة 🎈 : @xv7amo
+گەشەپێدەر 💻 : @VTVIT
+چەناڵ 🎈 : @xv7amo
 """
     await m.reply(JEPM)
 
@@ -94,9 +94,9 @@ async def repo(client, m: Message):
     await m.delete()
     JEPM = f"""
 <b>- مرحبا {m.from_user.mention}!
-🎶 هذا هو سورس الجوكر ميوزك
-🤖  اختصاص هذا البوت لتشغيل مقاطع صوتية او مقاطع الفيديو في المكالمات الصوتية
-⚒️ لعرض اوامر السورس ارسل  {HNDLR}الاوامر
-📚 • قناة السورس  : @xv7amo</b>
+🎶 ئەمە سەرچاوەی بۆتی زیرەكی میوزیکە
+🤖  لێهاتوویی ئەم بۆتەیە بۆ پەخشکردنی کلیپی دەنگی یان ڤیدیۆ لە پەیوەندی دەنگیدا.
+⚒️ بۆ پیشاندانی فەرمانی سەرچاوە بنێرە  {HNDLR}فەرمانەکان
+📚 • چەناڵی سەرچاوە  : @xv7amo</b>
 """
     await m.reply(JEPM, disable_web_page_preview=True)
