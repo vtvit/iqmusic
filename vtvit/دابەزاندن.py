@@ -34,16 +34,16 @@ from yt_dlp import YoutubeDL
 from config import HNDLR
 
 
-@Client.on_message(filters.command(["تحميل", "تنزيل"], prefixes=f"{HNDLR}"))
+@Client.on_message(filters.command(["داگرتن", "دابەزاندن"], prefixes=f"{HNDLR}"))
 async def song(client, message: Message):
     urlissed = get_text(message)
     if not urlissed:
         await client.send_message(
             message.chat.id,
-            "• يرجى وضع نص لتحميله من فضلك",
+            "• تکایە دەقێك دابنێ بۆ داگرتنی ",
         )
         return
-    pablo = await client.send_message(message.chat.id, f"**• جاري التحميل** `{urlissed}`")
+    pablo = await client.send_message(message.chat.id, f"**• دادەبەزێت ** `{urlissed}`")
     search = SearchVideos(f"{urlissed}", offset=1, mode="dict", max_results=1)
     mi = search.result()
     mio = mi["search_result"]
@@ -78,12 +78,12 @@ async def song(client, message: Message):
         with YoutubeDL(opts) as ytdl:
             ytdl_data = ytdl.extract_info(mo, download=True)
     except Exception as e:
-        await pablo.edit(f"**- خطأ في التنزيل ** \n**خطأ :** `{str(e)}`")
+        await pablo.edit(f"**- هەڵەیە لە داگرتنی ** \n**هەڵەیە :** `{str(e)}`")
         return
     c_time = time.time()
     capy = f"""
-**🏷️ إسم الأغنية :** [{thum}]({mo})
-**🎧 طلب تنزيل من :** {message.from_user.mention}
+**🏷️ ناوی گۆرانی :** [{thum}]({mo})
+**🎧 داواکاری داگرتن لە :** {message.from_user.mention}
 """
     file_stark = f"{ytdl_data['id']}.mp3"
     await client.send_audio(
@@ -98,7 +98,7 @@ async def song(client, message: Message):
         progress_args=(
             pablo,
             c_time,
-            f"**📥 يتم تحميل ** `{urlissed}`",
+            f"**📥 دادەبەزێت ** `{urlissed}`",
             file_stark,
         ),
     )
@@ -155,7 +155,7 @@ async def progress(current, total, message, start, type_of_ps, file_name=None):
         if file_name:
             try:
                 await message.edit(
-                    "{}\n**اسم الملف:** `{}`\n{}".format(type_of_ps, file_name, tmp)
+                    "{}\n**ناوی فایل:** `{}`\n{}".format(type_of_ps, file_name, tmp)
                 )
             except FloodWait as e:
                 await asyncio.sleep(e.x)
@@ -213,11 +213,11 @@ def time_formatter(milliseconds: int) -> str:
     hours, minutes = divmod(minutes, 60)
     days, hours = divmod(hours, 24)
     tmp = (
-        ((str(days) + " الايام, ") if days else "")
-        + ((str(hours) + " الساعات, ") if hours else "")
-        + ((str(minutes) + " الدقائق, ") if minutes else "")
-        + ((str(seconds) + " الثواني, ") if seconds else "")
-        + ((str(milliseconds) + " ملي ثانية, ") if milliseconds else "")
+        ((str(days) + " ڕۆژەکان, ") if days else "")
+        + ((str(hours) + " کاتژمێرەکان, ") if hours else "")
+        + ((str(minutes) + " خولەکەکان, ") if minutes else "")
+        + ((str(seconds) + " چرکەکان, ") if seconds else "")
+        + ((str(milliseconds) + " ملیی چرکە, ") if milliseconds else "")
     )
     return tmp[:-2]
 
@@ -247,14 +247,14 @@ def time_to_seconds(time):
     return sum(int(x) * 60 ** i for i, x in enumerate(reversed(stringt.split(":"))))
 
 
-@Client.on_message(filters.command(["فيد", "تحميل_فيديو"], prefixes=f"{HNDLR}"))
+@Client.on_message(filters.command(["ڤید", "داگرتنی_ڤیدیۆ"], prefixes=f"{HNDLR}"))
 async def vsong(client, message: Message):
     urlissed = get_text(message)
 
-    pablo = await client.send_message(message.chat.id, f"**🔎 يتم البحث عن ** `{urlissed}`")
+    pablo = await client.send_message(message.chat.id, f"**🔎 گەڕان بۆ ** `{urlissed}`")
     if not urlissed:
         await pablo.edit(
-            "• يرجى وضع اسم للبحث عنه اولا"
+            "• تکایە سەرەتا ناوێك دابنێ بۆ گەڕان بۆی"
         )
         return
 
@@ -285,13 +285,13 @@ async def vsong(client, message: Message):
         with YoutubeDL(opts) as ytdl:
             ytdl_data = ytdl.extract_info(url, download=True)
     except Exception as e:
-        await event.edit(event, f"**فشل التنزيل** \n**خطأ :** `{str(e)}`")
+        await event.edit(event, f"**داگرتن شکستی هێنا** \n**هەڵەیە :** `{str(e)}`")
         return
     c_time = time.time()
     file_stark = f"{ytdl_data['id']}.mp4"
     capy = f"""
-**🏷️ اسم الفيديو :** [{thum}]({mo})
-**🎧 طلب تحميله من:** {message.from_user.mention}
+**🏷️ ناوی ڤیدیۆ :** [{thum}]({mo})
+**🎧 داواکاری داگرتنی :** {message.from_user.mention}
 """
     await client.send_video(
         message.chat.id,
@@ -305,7 +305,7 @@ async def vsong(client, message: Message):
         progress_args=(
             pablo,
             c_time,
-            f"**📥 يتم التحميل** `{urlissed}`",
+            f"**📥 دادەبەزێت ** `{urlissed}`",
             file_stark,
         ),
     )
