@@ -7,7 +7,7 @@ from Musicjepthon.helpers.handlers import skip_current_song, skip_item
 from Musicjepthon.helpers.queues import QUEUE, clear_queue
 
 
-@Client.on_message(filters.command(["تخطي"], prefixes=f"{HNDLR}"))
+@Client.on_message(filters.command(["skip"], prefixes=f"{HNDLR}"))
 @authorized_users_only
 async def skip(client, m: Message):
     await m.delete()
@@ -15,17 +15,17 @@ async def skip(client, m: Message):
     if len(m.command) < 2:
         op = await skip_current_song(chat_id)
         if op == 0:
-            await m.reply("**- لا يوجد شيء في قائمة الانتظار لتخطيه**")
+            await m.reply("**- هیچ شتێک لە لیستەکەدا نییە بۆ تێپەڕاندن**")
         elif op == 1:
             await m.reply("**")
         else:
             await m.reply(
-                f"**⏭ تخطي التشغيل** \n**🎧 المشغل الحالي ** - [{op[0]}]({op[1]}) | `{op[2]}`",
+                f"**⏭ تێپەڕاندنی پەخشکردن** \n**🎧 دۆخی کارکردن  ** - [{op[0]}]({op[1]}) | `{op[2]}`",
                 disable_web_page_preview=True,
             )
     else:
         skip = m.text.split(None, 1)[1]
-        OP = "**🗑️ تمت إزالة الأغاني التالية من قائمة الانتظار : **"
+        OP = "**🗑️ ئەم گۆرانییانەی خوارەوە لە لیستەکە لابران : **"
         if chat_id in QUEUE:
             items = [int(x) for x in skip.split(" ") if x.isdigit()]
             items.sort(reverse=True)
@@ -41,7 +41,7 @@ async def skip(client, m: Message):
             await m.reply(OP)
 
 
-@Client.on_message(filters.command(["انهاء", "توقف"], prefixes=f"{HNDLR}"))
+@Client.on_message(filters.command(["stop", "stop"], prefixes=f"{HNDLR}"))
 @authorized_users_only
 async def stop(client, m: Message):
     await m.delete()
@@ -50,14 +50,14 @@ async def stop(client, m: Message):
         try:
             await call_py.leave_group_call(chat_id)
             clear_queue(chat_id)
-            await m.reply("**✅ تم إنهاء التشغيل بنجاح **")
+            await m.reply("**✅ بەسەرکەوتوویی کۆتایی پێ هات **")
         except Exception as e:
-            await m.reply(f"**هناك خطأ ** \n`{e}`")
+            await m.reply(f"**شتێکی هەڵە هەیە ** \n`{e}`")
     else:
-        await m.reply("**❌ لايوجد هناك اغنيه شغاله !**")
+        await m.reply("**❌ هیچ گۆرانیەك لێرە دا کارناکات !**")
 
 
-@Client.on_message(filters.command(["ايقاف"], prefixes=f"{HNDLR}"))
+@Client.on_message(filters.command(["pause"], prefixes=f"{HNDLR}"))
 @authorized_users_only
 async def pause(client, m: Message):
     await m.delete()
@@ -66,15 +66,15 @@ async def pause(client, m: Message):
         try:
             await call_py.pause_stream(chat_id)
             await m.reply(
-                f"**⏸ تم ايقاف التشغيل مؤقتًا.**\n\n•لاستئناف التشغيل ، استخدم الأمر  » {HNDLR}استئناف"
+                f"**⏸ وەستاندنی کاتی ئەنجامدرا.**\n\n•دەستپێکردنەوەی کارکردن ، بەکاربهێنە فەرمانی  » {HNDLR}reuse"
             )
         except Exception as e:
-            await m.reply(f"**خطأ** \n`{e}`")
+            await m.reply(f"**هەڵەیە** \n`{e}`")
     else:
-        await m.reply("**- لم يتم تشغيل اي شيء اصلا!**")
+        await m.reply("**- هیچ شتێك کارناکات!**")
 
 
-@Client.on_message(filters.command(["استئناف"], prefixes=f"{HNDLR}"))
+@Client.on_message(filters.command(["reuse"], prefixes=f"{HNDLR}"))
 @authorized_users_only
 async def resume(client, m: Message):
     await m.delete()
@@ -83,9 +83,9 @@ async def resume(client, m: Message):
         try:
             await call_py.resume_stream(chat_id)
             await m.reply(
-                f"**▶ تم استئناف التشغيل للاغنيه المتوقفة **\n\n•  لإيقاف التشغيل مؤقتًا ، استخدم الأمر » {HNDLR}ايقاف**"
+                f"**▶ پەخش کردن دەستی پێکردەوە بۆ گۆرانی وەستاوەکە **\n\n•  بۆ وەستاندنی پەخشکردنی کاتی  ، بەکاربهێنە فەرمانی » {HNDLR}pause**"
             )
         except Exception as e:
-            await m.reply(f"**خطأ** \n`{e}`")
+            await m.reply(f"**هەڵەیە** \n`{e}`")
     else:
-        await m.reply("** لم يتم إيقاف أي شيء مؤقتًا ❌**")
+        await m.reply("** هیچ شتێك نە وەستێندراوە ❌**")
